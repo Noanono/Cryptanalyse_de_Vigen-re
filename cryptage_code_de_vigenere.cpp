@@ -11,7 +11,7 @@ int Index_Of(char k, char tab[], int tp){
     int index = 0;
 
     while(index < tp && tab[index] != k){
-        index++
+        index++;
     }
     if(index == tp){
         index = -1;
@@ -28,7 +28,8 @@ void Crypt_Vigenere(char adresse_decry[], char key[], char adresse_cry[]){
                          'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q',
                          'r','s','t','u','v','w','x','y','z'};
 
-    char leter = "";
+    char leter;
+    txt_decry_Flux.get(leter);
     char cry_leter;
     int i = 0;
     while(leter != '\0'){

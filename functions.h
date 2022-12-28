@@ -17,6 +17,6 @@ void Crypt_Vigenere(char adresse_decry[], char key[], char adresse_cry[]);
  * E: 1 caractère : celui dont on cherche l'indice, 1 tableau de caractères, 1 entier  la taille pratique du tableau
  * S: 1 entier : l'index du caractère
  */
-int Index_Of(char k, char tab[], int tp)
+int Index_Of(char k, char tab[], int tp);
 
 #endif //INFO1_PROJETVIGENERE_FUNCTIONS_H
