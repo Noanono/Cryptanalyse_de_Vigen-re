@@ -20,9 +20,20 @@ int Index_Of(char k, char tab[], int tp){
     return index;
 }
 
-void Crypt_Vigenere(char adresse_decry[], char key[], char adresse_cry[]){
-    ofstream txt_cry_Flux(adresse_cry);
-    ifstream txt_decry_Flux(adresse_decry);
+void Crypt_Vigenere(string adresse_decry, char key[], string adresse_cry){
+    /*ofstream txt_cry_Flux;
+    txt_cry_Flux.open("./cry_files/Cryptage_test1.txt");
+    if(txt_cry_Flux.fail()){
+        cerr << "cry file didn't opened !" << endl;
+        exit(1);
+    }*/
+
+    ifstream txt_decry_Flux;
+    txt_decry_Flux.open("tx_decry_cryptage_test1.txt");
+    if(txt_decry_Flux.fail()){
+        cerr << "decry file didn't opened !" << endl;
+        exit(1);
+    }
 
     char alphabet[27] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
                          'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q',
@@ -39,7 +50,7 @@ void Crypt_Vigenere(char adresse_decry[], char key[], char adresse_cry[]){
 
         //Cryptage du caractère
         //Recupération du caractère
-        txt_decry_Flux.get(leter);
+        txt_decry_Flux >> leter;
 
         int index_leter, index_cry_leter, index_key;
 
@@ -54,8 +65,10 @@ void Crypt_Vigenere(char adresse_decry[], char key[], char adresse_cry[]){
 
         cry_leter = alphabet[index_cry_leter];
 
+        cout << leter << "-->" << cry_leter << endl;
+
         //Envoie du caractère crypté sur le fichier cible
-        txt_cry_Flux.put(cry_leter);
+        //txt_cry_Flux << cry_leter;
 
         i++;
     }
