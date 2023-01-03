@@ -6,11 +6,18 @@
 #define INFO1_PROJETVIGENERE_FUNCTIONS_H
 
 /*
- * R: Crypter un fichier texte avec une clé et la taille de la clé
- * E: 1 tab de char : l'adresse du fichier a crypter, 1 tab char : la clé, 1 entier : la taille de la clé, 1 tab char : l'adresse du fichier qui recoit le cryptage
+ * R: Crypter un fichier texte avec une clé
+ * E: 1 tab de char : l'adresse du fichier a crypter, 1 tab char : la clé, 1 tab char : l'adresse du fichier qui recoit le cryptage
  * S: vide
  */
 void Crypt_Vigenere(string adresse_decry, char key[], string adresse_cry);
+
+/*
+ * R: Decrypter un fichier texte avec une clé
+ * E: 1 tab de char : l'adresse du fichier a crypter, 1 tab char : la clé, 1 tab char : l'adresse du fichier qui recoit le cryptage
+ * S: vide
+ */
+void Decrypt_Vigenere(string adresse_decry, char key[], string adresse_cry)
 
 /*
  * R: Rechercher un index dans un tableau de caractères
