@@ -5,9 +5,10 @@
 #include <fstream>
 using namespace std;
 
+#include "vars.h"
 #include "functions.h"
 
-int Index_Of(char k, char tab[], int tp){
+int Index_Of(char k, const char tab[], int tp){
     int index = 0;
 
     while(index < tp && tab[index] != k){
@@ -33,19 +34,11 @@ void Crypt_Vigenere(string adresse_decry, char key[], string adresse_cry){
         exit(1);
     }
 
-    char alphabet[27] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
-                         'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q',
-                         'r','s','t','u','v','w','x','y','z'};
-    char alphabet_maj[27] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I',
-                         'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q',
-                         'R','S','T','U','V','W','X','Y','Z'};
-
     //Recherche de la fin du texte
     int end;
     txt_decry_Flux.seekg (0, txt_decry_Flux.end);
     end = txt_decry_Flux.tellg() ;
     txt_decry_Flux.seekg (0, txt_decry_Flux.beg);
-    end--;
 
     int place_in_txt = 0;
 
@@ -64,24 +57,12 @@ void Crypt_Vigenere(string adresse_decry, char key[], string adresse_cry){
         if(leter == '_'){
             cry_leter = leter;
         }else{
-            int index_leter, index_cry_leter, index_key;
+            int index_leter, index_key;
 
             index_leter = Index_Of(leter, alphabet, 26);
-            if(index_leter == -1){
-                index_leter = Index_Of(leter, alphabet_maj, 26);
-            }
             index_key = Index_Of(key[i], alphabet, 26);
-            if(index_key == -1){
-                index_key = Index_Of(key[i], alphabet_maj, 26);
-            }
 
-            index_cry_leter = index_leter + index_key;
-
-            if(index_cry_leter >= 26){
-                index_cry_leter -= 26;
-            }
-
-            cry_leter = alphabet[index_cry_leter];
+            cry_leter = alphab_tab[index_key][index_leter];
         }
 
         //Envoie du caractère crypté sur le fichier cible
@@ -93,5 +74,62 @@ void Crypt_Vigenere(string adresse_decry, char key[], string adresse_cry){
 }
 
 void Decrypt_Vigenere(string adresse_decry, char key[], string adresse_cry){
+
+    ofstream Flux_decry_txt(adresse_decry);
+    if(!Flux_decry_txt){
+        cerr << "decry not open !" << endl;
+        exit(1);
+    }
+
+    ifstream Flux_cry_txt(adresse_cry);
+    if(!Flux_cry_txt){
+        cerr << "cry not open !" << endl;
+        exit(1);
+    }
+
+    //fin du texte crypté
+    int end;
+    Flux_cry_txt.seekg (0, Flux_cry_txt.end);
+    end = Flux_cry_txt.tellg() ;
+    Flux_cry_txt.seekg (0, Flux_cry_txt.beg);
+
+    int place_in_txt = 0;
+
+    char leter;
+    char decry_leter;
+    int i = 0;
+    while(place_in_txt < end){
+        if(key[i] == '\0'){
+            i = 0;
+        }
+
+        //Cryptage du caractère
+        //Recupération du caractère
+        Flux_cry_txt >> leter;
+
+        if(leter ==  '_') {
+            decry_leter = leter;
+        }else{
+            int index_leter, index_key;
+
+            index_leter = Index_Of(leter, alphabet, 26);
+            index_key = Index_Of(key[i], alphabet, 26);
+
+            if(index_key == 0){
+                decry_leter = leter;
+            }else{
+                decry_leter = alphab_tab[26 - index_key][index_leter];
+            }
+        }
+
+
+        //Envoie du caractère crypté sur le fichier cible
+        Flux_decry_txt << decry_leter;
+
+        i++;
+        place_in_txt++;
+    }
+
+
 
 }
