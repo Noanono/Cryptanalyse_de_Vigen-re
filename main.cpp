@@ -2,19 +2,21 @@
 #include <string>
 using namespace std;
 
-#include "functions.h"
+#include "cryptanalyse.h"
 
 int main(){
+    int lengthkey;
+    char key[100];
 
-    string adresse_decry_file1 = "/media/noah/Data/Telecom_SE/Cryptanalyse_de_Vigen-re/Decry_files/Cryptage_test1.txt";
-    string adresse_cry_file1 = "/media/noah/Data/Telecom_SE/Cryptanalyse_de_Vigen-re/Cry_files/Cryptage_test1.txt";
-    string adresse_decry_file2 = "/media/noah/Data/Telecom_SE/Cryptanalyse_de_Vigen-re/Decry_files/Decryptage_test1.txt";
-    string adresse_cry_file2 = "/media/noah/Data/Telecom_SE/Cryptanalyse_de_Vigen-re/Cry_files/Decryptage_test1.txt";
-    char key[8] = "a";
+    /*----------------------------------------------------------------------*/
 
-    Crypt_Vigenere(adresse_decry_file1, key, adresse_cry_file1);
-    Decrypt_Vigenere(adresse_decry_file2, key, adresse_cry_file1);
-    Crypt_Vigenere(adresse_decry_file2, key, adresse_cry_file2);
-
+    lengthkey = findkeylenght(1, 100);
+    cout << "La longueur de la cle est : " << lengthkey << " lettres" << endl;
+    for (int t = 0; t < lengthkey; t++) {
+        key[t] = find_oneletter_key(lengthkey, t);
+    }
+    key[lengthkey] = '\0';
+    cout <<"La cle est : "<< key << endl;
+    decodefichier(key, lengthkey);
     return 0;
 }
